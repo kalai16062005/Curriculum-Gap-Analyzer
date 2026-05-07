@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Curriculum Gap Analyzer | Strategic Analytics</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+      .dashboard-nav {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin: 20px 0;
+        background: #f8fafc;
+        padding: 12px;
+        border-radius: 15px;
+        border: 1px solid #e2e8f0;
+      }
+      .nav-btn {
+        padding: 12px 24px;
+        border: none;
+        background: transparent;
+        color: #64748b;
+        font-weight: 600;
+        cursor: pointer;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+      }
+      .nav-btn.active {
+        background: #ffffff;
+        color: #4f46e5;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+      .tab-content {
+        display: none;
+      }
+      .tab-content.active {
+        display: block;
+        animation: fadeIn 0.5s;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .chart-box {
+        height: 450px;
+        width: 100%;
+        padding: 20px;
+      }
+      .main-banner {
+        background: #1e293b;
+        color: white;
+        padding: 40px;
+        border-radius: 20px;
+        text-align: center;
+        margin-bottom: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header class="main-banner">
+        <h1>🎓 Curriculum Gap Analyzer</h1>
+        <p>Intelligence Pipeline: Institutional Skill Framework Comparison</p>
+      </header>
+
+      <div class="card">
+        <h3>Upload University Syllabus (PDF)</h3>
+        <div class="input-row">
+          <input type="file" id="pdfInput" accept="application/pdf" />
+          <button id="uploadBtn">Analyze Engine 🚀</button>
+        </div>
+        <div id="loading" class="hidden">
+          Running Algorithmic Comparison... ⏳
+        </div>
+      </div>
+
+      <div id="resultSection" class="hidden">
+        <nav class="dashboard-nav">
+          <button class="nav-btn active" onclick="showTab('overview')">
+            📊 Overview
+          </button>
+          <button class="nav-btn" onclick="showTab('visuals')">
+            📈 Visual Analytics
+          </button>
+          <button class="nav-btn" onclick="showTab('reports')">
+            📋 Skill Reports
+          </button>
+        </nav>
+
+        <div id="overview" class="tab-content active">
+          <div class="score-card card">
+            <h3 style="color: var(--primary)">
+              Institutional Industry Readiness
+            </h3>
+            <div class="progress-wrapper">
+              <div
+                id="readinessProgressBar"
+                class="progress-fill"
+                style="width: 0%"
+              >
+                0%
+              </div>
+            </div>
+            <button id="downloadProposalBtn" class="download-btn">
+              📥 Download Professional Strategic Report
+            </button>
+          </div>
+
+          <div class="stats-container">
+            <div class="stat-card matched">
+              <span class="label">Matched Skills</span>
+              <span id="matchedCount" class="value">0</span>
+            </div>
+            <div class="stat-card gap">
+              <span class="label">Gap Percentage</span>
+              <span id="gapPercent" class="value">0%</span>
+            </div>
+            <div class="stat-card total">
+              <span class="label">Total Framework Skills</span>
+              <span id="totalSkills" class="value">18104</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="visuals" class="tab-content">
+          <div class="card">
+            <h3 style="color: var(--primary); text-align: center">
+              📈 Domain-wise Gap Visualization
+            </h3>
+            <div class="chart-box">
+              <canvas id="readinessChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div id="reports" class="tab-content">
+          <div class="reports-flex">
+            <div class="report-table-wrapper">
+              <h3 style="color: var(--success)">✅ Identified Skills</h3>
+              <div class="table-scroll">
+                <table class="report-table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Skill Name</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="matchedTableBody"></tbody>
+                </table>
+              </div>
+            </div>
+            <div class="report-table-wrapper">
+              <h3 style="color: var(--danger)">🚫 Curriculum Gaps</h3>
+              <div class="table-scroll">
+                <table class="report-table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Skill Name</th>
+                      <th>Priority</th>
+                    </tr>
+                  </thead>
+                  <tbody id="missingTableBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
